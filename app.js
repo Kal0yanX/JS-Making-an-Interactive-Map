@@ -27,14 +27,14 @@ const getCurrentPosition = async () => {
 			'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 			minZoom: '12',
 		}).addTo(this.map);
-		// create and add geolocation marker
+		// created and added the "You are here" geolocation marker
 		const marker = L.marker(this.coordinates);
 		marker
 		  .addTo(this.map)
 		  .bindPopup("<p1><b>You are here</b><br></p1>")
 		  .openPopup();
 	  },
-	  // add business markers
+	  // added generic business markers
 	  addMarkers() {
 		for (let i = 0; i < this.businesses.length; i++) {
 		  this.markers = L.marker([
@@ -86,26 +86,6 @@ const getCurrentPosition = async () => {
 	  })
 	  return businesses
   }
-  
-  // get foursquare businesses
-  async function getFoursquare(business) {
-	  const options = {
-		  method: 'GET',
-		  headers: {
-		  Accept: 'application/json',
-		  Authorization: 'fsq3zOqedR02KYNJfYnIix+gZLlgY4PIdfT27oGdouHn5YY='
-		  }
-	  }
-	  let limit = 5
-	  let lat = myMap.coordinates[0]
-	  let lon = myMap.coordinates[1]
-	  let response = await fetch(`https://api.foursquare.com/v3/places/search?&query=${business}&limit=${limit}&ll=${lat}%2C${lon}`, options)
-	  let data = await response.text()
-	  let parsedData = JSON.parse(data)
-	  let businesses = parsedData.results
-	  return businesses
-  }
-  
   
   getCurrentPosition()
 	.then(successCallback)
