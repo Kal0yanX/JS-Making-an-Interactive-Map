@@ -47,12 +47,13 @@ const getCurrentPosition = async () => {
 	  },
 	};
   
+	//putting getFoursquare function to invoke the response breaks the code
 	try {
 	  const options = {
 		method: "GET",
 		headers: {
-		  Accept: "application/json",
-		  Authorization: "fsq3zOqedR02KYNJfYnIix+gZLlgY4PIdfT27oGdouHn5YY=",
+		Accept: "application/json",
+		Authorization: "fsq3zOqedR02KYNJfYnIix+gZLlgY4PIdfT27oGdouHn5YY=",
 		},
 	  };
 	  const response = await fetch(
@@ -78,9 +79,9 @@ const getCurrentPosition = async () => {
   function processBusinesses(data) {
 	  let businesses = data.map((element) => {
 		  let location = {
-			  name: element.name,
-			  lat: element.geocodes.main.latitude,
-			  long: element.geocodes.main.longitude
+			name: element.name,
+			lat: element.geocodes.main.latitude,
+			long: element.geocodes.main.longitude
 		  };
 		  return location
 	  })
@@ -95,6 +96,7 @@ const getCurrentPosition = async () => {
   document.getElementById('submit').addEventListener('click', async (event) => {
 	  event.preventDefault()
 	  let business = document.getElementById('business').value
+	  //getFoursquare command unsuccessful
 	  let data = await getFoursquare(business)
 	  myMap.businesses = processBusinesses(data)
 	  myMap.addMarkers()
